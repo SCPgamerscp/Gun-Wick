@@ -5,6 +5,7 @@ import com.scpgamerscp.gunwick.entity.GunWickEntity;
 import com.scpgamerscp.gunwick.item.TaczGuns;
 import com.tacz.guns.api.entity.IGunOperator;
 import com.tacz.guns.api.entity.ShootResult;
+import com.tacz.guns.entity.shooter.ShooterDataHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -272,7 +273,14 @@ public class GunWickRangedGoal extends Goal {
         Vec3 to = target.getEyePosition().subtract(this.wick.getEyePosition());
         float yaw = (float) (Mth.atan2(to.z, to.x) * (180.0F / Math.PI)) - 90.0F;
         float pitch = (float) -(Mth.atan2(to.y, Math.sqrt(to.x * to.x + to.z * to.z)) * (180.0F / Math.PI));
-        ShootResult result = operator.shoot(() -> pitch, () -> yaw);
+
+        ShooterDataHolder holder = operator.getDataHolder();
+        long timestamp = System.currentTimeMillis();
+        if (holder != null) {
+            timestamp -= holder.baseTimestamp;
+        }
+
+        ShootResult result = operator.shoot(() -> pitch, () -> yaw, timestamp);
         switch (result) {
             case NEED_BOLT -> operator.bolt();
             case NO_AMMO, ID_NOT_EXIST -> {
@@ -281,6 +289,10 @@ public class GunWickRangedGoal extends Goal {
             }
             case NOT_DRAW -> operator.draw(this.wick::getMainHandItem);
             case OVERHEATED -> TaczGuns.refill(this.wick.getMainHandItem());
+            case NETWORK_FAIL -> {
+                operator.initialData();
+                operator.draw(this.wick::getMainHandItem);
+            }
             default -> {
             }
         }

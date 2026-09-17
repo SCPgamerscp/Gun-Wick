@@ -109,12 +109,25 @@ public class GunWickEntity extends Monster {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+        this.ensureGunInitialized();
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
         double speed = this.isPhaseTwo() ? GunWickConfig.PHASE_TWO_MOVE_SPEED.get() : GunWickConfig.MOVE_SPEED.get();
         if (this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() != speed) {
             this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed);
         }
         TaczGuns.refill(this.getMainHandItem());
+    }
+
+    public void ensureGunInitialized() {
+        ItemStack held = this.getMainHandItem();
+        if (held.isEmpty()) {
+            this.setGun(TaczGuns.create(TaczGuns.Loadout.GLOCK));
+        }
+        IGunOperator operator = IGunOperator.fromLivingEntity(this);
+        if (operator.getDataHolder().currentGunItem == null) {
+            operator.initialData();
+            operator.draw(this::getMainHandItem);
+        }
     }
 
     @Override
