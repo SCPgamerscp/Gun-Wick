@@ -1,0 +1,8 @@
+{
+  "entity.gunwick.gun_wick": "Gun Wick",
+  "entity.gunwick.wicks_wolf": "Wick's Wolf",
+  "item.gunwick.gun_wick_spawn_egg": "Gun Wick Spawn Egg",
+  "item.gunwick.wicks_wolf_spawn_egg": "Wick's Wolf Spawn Egg",
+  "itemGroup.gunwick": "Gun Wick",
+  "boss.gunwick.appeared": "Gun Wick has appeared"
+}

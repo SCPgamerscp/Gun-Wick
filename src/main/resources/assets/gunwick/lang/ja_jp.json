@@ -1,0 +1,8 @@
+{
+  "entity.gunwick.gun_wick": "Gun Wick",
+  "entity.gunwick.wicks_wolf": "ウィックのオオカミ",
+  "item.gunwick.gun_wick_spawn_egg": "Gun Wickのスポーンエッグ",
+  "item.gunwick.wicks_wolf_spawn_egg": "ウィックのオオカミのスポーンエッグ",
+  "itemGroup.gunwick": "Gun Wick",
+  "boss.gunwick.appeared": "Gun Wick が現れた"
+}
