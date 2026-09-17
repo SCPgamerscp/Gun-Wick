@@ -33,6 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import org.jetbrains.annotations.Nullable;
 
 public class GunWickEntity extends Monster {
@@ -46,6 +47,15 @@ public class GunWickEntity extends Monster {
         this.xpReward = 200;
         this.setPersistenceRequired();
         this.setCanPickUpLoot(false);
+
+        this.setPathfindingMalus(BlockPathTypes.LAVA, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 16.0F);
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_OTHER, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, 16.0F);
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_CAUTIOUS, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
