@@ -17,6 +17,11 @@ public class WicksWolfRenderer extends MobRenderer<WicksWolfEntity, WolfModel<Wi
     }
 
     @Override
+    protected float getBob(WicksWolfEntity wolf, float partialTicks) {
+        return wolf.getTailAngle();
+    }
+
+    @Override
     public ResourceLocation getTextureLocation(WicksWolfEntity wolf) {
         if (wolf.isTame()) {
             return WOLF_TAME_LOCATION;
