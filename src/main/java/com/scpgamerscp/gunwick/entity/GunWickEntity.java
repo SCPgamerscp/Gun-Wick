@@ -17,6 +17,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -83,11 +84,22 @@ public class GunWickEntity extends Monster {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
         SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data, tag);
+        this.setLeftHanded(false);
         this.applyConfigAttributes();
         this.setGun(TaczGuns.create(TaczGuns.Loadout.GLOCK));
         IGunOperator.fromLivingEntity(this).initialData();
         IGunOperator.fromLivingEntity(this).draw(this::getMainHandItem);
         return result;
+    }
+
+    @Override
+    public boolean isLeftHanded() {
+        return false;
+    }
+
+    @Override
+    public HumanoidArm getMainArm() {
+        return HumanoidArm.RIGHT;
     }
 
     public void applyConfigAttributes() {
